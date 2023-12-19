@@ -22,7 +22,7 @@ class MyAppRouter {
           name: RouteNames.homeRoute,
           path: '/homePageRoute',
           pageBuilder: (context, state) {
-            return MaterialPage(child: HomePage());
+            return const MaterialPage(child: HomePage());
           },
         ),
         // GoRoute(

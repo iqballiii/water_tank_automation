@@ -63,7 +63,7 @@ class LiquidPainter extends CustomPainter {
               startAngle: pi / 2,
               endAngle: 5 * pi / 2,
               tileMode: TileMode.clamp,
-              stops: [
+              stops: const [
                 0.25,
                 0.35,
                 0.5,

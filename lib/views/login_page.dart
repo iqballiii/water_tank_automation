@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
                 BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
             child: Column(
               children: [
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Text(
@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                         width: mediaSize.width * 0.35,
                         child: TextFormField(
                           controller: usernameController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: "yourname@example.com",
                               labelText: "Email"),
                         ))
@@ -61,7 +61,8 @@ class LoginPage extends StatelessWidget {
                         width: mediaSize.width * 0.35,
                         child: TextFormField(
                           controller: passwordController,
-                          decoration: InputDecoration(labelText: "Password"),
+                          decoration:
+                              const InputDecoration(labelText: "Password"),
                         ))
                     .animate()
                     .slideX(
@@ -78,7 +79,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           context.goNamed(RouteNames.homeRoute);
                         },
-                        child: Text('Let\'s Go!'))),
+                        child: const Text('Let\'s Go!'))),
                 const Spacer(
                   flex: 2,
                 ),

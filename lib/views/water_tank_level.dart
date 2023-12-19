@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:water_tank_automation/painter/liquid_painter.dart';
 import 'package:water_tank_automation/painter/water_tank_painter.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class WaterTankLevelPage extends StatefulWidget {
   const WaterTankLevelPage({super.key});
@@ -9,13 +10,11 @@ class WaterTankLevelPage extends StatefulWidget {
   State<WaterTankLevelPage> createState() => _WaterTankLevelPageState();
 }
 
-class _WaterTankLevelPageState extends State<WaterTankLevelPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class _WaterTankLevelPageState extends State<WaterTankLevelPage> {
   bool isPlaying = true;
   int maxDuration = 10;
   bool isParticlesReady = true;
-
+  FirebaseDatabase database = FirebaseDatabase.instance;
   ValueNotifier<int> waterLevel = ValueNotifier(0);
   void waterLevelUpater(int val) {
     waterLevel.value = val;
@@ -24,35 +23,21 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage>
   @override
   void initState() {
     super.initState();
-
-    _controller = AnimationController(
-        vsync: this, duration: Duration(seconds: maxDuration))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          isPlaying = false;
-        }
-        if (status == AnimationStatus.forward) {
-          isParticlesReady = true;
-        }
-      })
-      ..addListener(() {
-        waterLevelUpater((_controller.value * maxDuration).toInt());
-      });
-
-    _controller.forward().then((value) => _controller.reverse());
+    database.ref('waterTank/water_level').onValue.listen((event) {
+      final double data = double.parse(event.snapshot.value.toString());
+      final levelOfWater = int.parse(((data / 50.0) * 100).toString());
+      waterLevelUpater(levelOfWater);
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.sizeOf(context);
-    double val = (_controller.value * maxDuration);
-    waterLevelUpater(val.toInt());
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: mediaSize.height * 0.12,
@@ -73,9 +58,7 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage>
               //         fit: StackFit.expand,
               //         children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 50.0,
-                ),
+                padding: const EdgeInsets.only(top: 50.0),
                 child: Stack(
                   children: [
                     SizedBox(
@@ -83,12 +66,13 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage>
                       width: mediaSize.width * 0.7,
                       child: CustomPaint(
                         painter: WaterTankPainter(),
-                        child: AnimatedBuilder(
-                          animation: _controller,
-                          builder: (context, _) {
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: waterLevel,
+                          builder: (context, waterLevelValue, _) {
                             return CustomPaint(
                               painter: LiquidPainter(
-                                _controller.value * maxDuration,
+                                ((waterLevelValue / 100) * maxDuration)
+                                    .toDouble(),
                                 maxDuration.toDouble(),
                               ),
                             );
@@ -98,10 +82,9 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage>
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: ValueListenableBuilder(
+                      child: ValueListenableBuilder<int>(
                         valueListenable: waterLevel,
-                        builder: (BuildContext context, dynamic value,
-                            Widget? child) {
+                        builder: (BuildContext context, value, Widget? child) {
                           return Text(
                             "$value %",
                             style: Theme.of(context).textTheme.displayMedium,
@@ -114,8 +97,7 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage>
               ),
               SizedBox(
                 height: mediaSize.height * 0.2,
-              )
-
+              ),
               //           Padding(
               //             padding: const EdgeInsets.all(5.0),
               //             child: CustomPaint(
