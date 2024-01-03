@@ -52,8 +52,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   const Expanded(
                           child: HomeCardWidget(
-                    iconName: Icons.person,
-                    title: 'Profile',
+                    iconName: Icons.admin_panel_settings,
+                    title: 'User & more',
                     index: 1,
                   ))
                       .animate()
@@ -120,7 +120,7 @@ class HomeCardWidget extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
       onTap: () {
-        title == "Logout" ? context.pop() : context.goNamed(navigationUrl!);
+        title == "Logout" ? null : context.goNamed(navigationUrl!);
       },
       child: Container(
         height: height,

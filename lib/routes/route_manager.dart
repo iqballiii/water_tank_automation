@@ -20,7 +20,7 @@ class MyAppRouter {
         ),
         GoRoute(
           name: RouteNames.homeRoute,
-          path: '/homePageRoute',
+          path: '/home',
           pageBuilder: (context, state) {
             return const MaterialPage(child: HomePage());
           },
@@ -38,7 +38,7 @@ class MyAppRouter {
         // ),
         GoRoute(
           name: RouteNames.waterLevelRoute,
-          path: '/waterLevelRoute',
+          path: '/waterLevel',
           pageBuilder: (context, state) {
             return const MaterialPage(child: WaterTankLevelPage());
           },

@@ -9,7 +9,7 @@ class WaterTankPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     //1 Draw the left border of the tank
-    canvas.drawLine(Offset(size.width * 0.1, -30),
+    canvas.drawLine(Offset(size.width * 0.1, -size.height * .03),
         Offset(size.width * 0.1, size.height * 1), borderPaint1);
 
     // Draw the bottom border of the tank.
@@ -18,7 +18,7 @@ class WaterTankPainter extends CustomPainter {
 
     //3 Draw the right border of the tank
     canvas.drawLine(Offset(size.width * 0.8, size.height * 1),
-        Offset(size.width * 0.8, -30), borderPaint1);
+        Offset(size.width * 0.8, -size.height * .03), borderPaint1);
   }
 
   @override
