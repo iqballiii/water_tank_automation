@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "377794084770",
+    "firebase_url": "https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "water-tank-automation-c1811",
+    "storage_bucket": "water-tank-automation-c1811.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377794084770:android:e1487954acefb9fffcbcfb",
+        "android_client_info": {
+          "package_name": "com.example.water_tank_automation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeA1Z93Wh-67V3FAo-y-bwoIcQL0dC-u4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

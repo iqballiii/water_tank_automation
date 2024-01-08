@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:water_tank_automation/blocs/authentication_bloc/auth_bloc.dart';
 import 'package:water_tank_automation/routes/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -8,7 +10,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const WaterTankAutomationApp());
+  runApp(BlocProvider(
+      create: (context) => AuthenticationBloc(),
+      child: const WaterTankAutomationApp()));
 }
 
 class WaterTankAutomationApp extends StatelessWidget {

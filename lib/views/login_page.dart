@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
-
-import '../routes/route_names.dart';
+import 'package:water_tank_automation/blocs/authentication_bloc/auth_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:water_tank_automation/routes/route_names.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  final TextEditingController usernameController = TextEditingController();
-
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -44,7 +45,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                         width: mediaSize.width * 0.35,
                         child: TextFormField(
-                          controller: usernameController,
+                          controller: emailController,
                           decoration: const InputDecoration(
                               hintText: "yourname@example.com",
                               labelText: "Email"),
@@ -72,14 +73,46 @@ class LoginPage extends StatelessWidget {
                 const Spacer(
                   flex: 2,
                 ),
-                SizedBox(
-                    height: mediaSize.height * 0.1,
-                    width: mediaSize.width * 0.34,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          context.goNamed(RouteNames.homeRoute);
-                        },
-                        child: const Text('Let\'s Go!'))),
+                BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                  listener: (context, state) {
+                    if (state is AuthenticationSuccessState) {
+                      context.goNamed(RouteNames.homeRoute);
+                    } else if (state is AuthenticationFailureState) {
+                      var customState = state;
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: const Text('Sign in Failed! :\'('),
+                                content: Text(customState.errorMessage),
+                              ));
+                    } else {
+                      // do nothing
+                    }
+                  },
+                  builder: (context, state) {
+                    bool isLoading = false;
+                    if (state is AuthenticationLoadingState) {
+                      isLoading = state.isLoading;
+                    }
+                    return SizedBox(
+                        height: mediaSize.height * 0.1,
+                        width: mediaSize.width * 0.34,
+                        child: ElevatedButton(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    Logger().f("entered the go zone!");
+                                    BlocProvider.of<AuthenticationBloc>(context)
+                                        .add(SignInUserEvent(
+                                            emailController.text,
+                                            passwordController.text));
+                                  },
+                            child: isLoading
+                                ? const CircularProgressIndicator.adaptive()
+                                : const Text('Let\'s Go!')));
+                  },
+                ),
+
                 const Spacer(
                   flex: 2,
                 ),

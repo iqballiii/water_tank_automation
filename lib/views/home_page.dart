@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:water_tank_automation/blocs/authentication_bloc/auth_bloc.dart';
 import 'package:water_tank_automation/routes/route_names.dart';
 
 /// The Home page is the central page from where the user can navigate
@@ -119,9 +121,16 @@ class HomeCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
-      onTap: () {
-        title == "Logout" ? null : context.goNamed(navigationUrl!);
-      },
+      onTap: title == "Logout"
+          ? () {
+              BlocProvider.of<AuthenticationBloc>(context).add(SignOutEvent());
+              context.canPop()
+                  ? Navigator.popAndPushNamed(context, RouteNames.loginRoute)
+                  : context.goNamed(RouteNames.loginRoute);
+            }
+          : () {
+              context.goNamed(navigationUrl!);
+            },
       child: Container(
         height: height,
         width: width,
