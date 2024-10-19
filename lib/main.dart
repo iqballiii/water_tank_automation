@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:water_tank_automation/blocs/authentication_bloc/auth_bloc.dart';
+import 'package:water_tank_automation/blocs/app_bloc/app_bloc.dart';
+import 'package:water_tank_automation/blocs/water_tracking_bloc/water_track_bloc.dart';
 import 'package:water_tank_automation/routes/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(BlocProvider(
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
       create: (context) => AuthenticationBloc(),
-      child: const WaterTankAutomationApp()));
+    ),
+    BlocProvider(
+      create: (context) => WaterTrackBloc(),
+    ),
+  ], child: const WaterTankAutomationApp()));
 }
 
 class WaterTankAutomationApp extends StatelessWidget {

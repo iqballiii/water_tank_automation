@@ -1,4 +1,4 @@
-part of 'auth_bloc.dart';
+part of 'app_bloc.dart';
 
 abstract class AuthenticationEvent {
   const AuthenticationEvent();
@@ -26,4 +26,15 @@ class SignInUserEvent extends AuthenticationEvent {
 
   @override
   List<Object> get props => [email, password];
+}
+
+class LoadWaterLevel extends AuthenticationEvent {}
+
+class UpdateWaterLevel extends AuthenticationEvent {
+  final double waterLevel;
+
+  const UpdateWaterLevel(this.waterLevel);
+
+  @override
+  List<Object> get props => [waterLevel];
 }

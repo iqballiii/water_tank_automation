@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:water_tank_automation/routes/route_names.dart';
 import 'package:water_tank_automation/views/error_page.dart';
-import 'package:water_tank_automation/views/home_page.dart';
+import 'package:water_tank_automation/views/home/home_page.dart';
 import 'package:water_tank_automation/views/login_page.dart';
-import 'package:water_tank_automation/views/water_tank_level.dart';
+import 'package:water_tank_automation/views/water_tank/new_water_wave_page.dart';
+import 'package:water_tank_automation/views/water_tank/water_tank_level_page.dart';
 
 class MyAppRouter {
   /// The route configuration.
@@ -25,6 +26,12 @@ class MyAppRouter {
             return const MaterialPage(child: HomePage());
           },
         ),
+        GoRoute(
+            path: '/new_water_level_page',
+            name: RouteNames.newWaterLevelRoute,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: WaterWaveAnimationPage());
+            }),
         // GoRoute(
         //   name: RouteNames.profileRoute,
         //   path: '/profile/:username/:userid',
@@ -38,7 +45,7 @@ class MyAppRouter {
         // ),
         GoRoute(
           name: RouteNames.waterLevelRoute,
-          path: '/waterLevel',
+          path: '/water_level_page',
           pageBuilder: (context, state) {
             return const MaterialPage(child: WaterTankLevelPage());
           },
@@ -48,41 +55,5 @@ class MyAppRouter {
         return const MaterialPage(child: ErrorPage());
       },
     );
-  }
-
-  static GoRouter returnRouter(bool isAuth) {
-    GoRouter router = GoRouter(
-      routes: [
-        GoRoute(
-          name: RouteNames.homeRoute,
-          path: '/',
-          pageBuilder: (context, state) {
-            return const MaterialPage(child: HomePage());
-          },
-        ),
-        // GoRoute(
-        //   name: RouteNames.profileRoute,
-        //   path: '/profile/:username/:userid',
-        //   pageBuilder: (context, state) {
-        //     return MaterialPage(
-        //         child: Profile(
-        //           userid: state.params['userid']!,
-        //           username: state.params['username']!,
-        //         ));
-        //   },
-        // ),
-        GoRoute(
-          name: RouteNames.waterLevelRoute,
-          path: '/waterLevelRoute',
-          pageBuilder: (context, state) {
-            return const MaterialPage(child: WaterTankLevelPage());
-          },
-        ),
-      ],
-      errorPageBuilder: (context, state) {
-        return const MaterialPage(child: ErrorPage());
-      },
-    );
-    return router;
   }
 }

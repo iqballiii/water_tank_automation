@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
+import 'package:water_tank_automation/blocs/water_tracking_bloc/water_track_bloc.dart';
 import 'package:water_tank_automation/painter/liquid_painter.dart';
 import 'package:water_tank_automation/painter/water_tank_painter.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:water_tank_automation/routes/route_names.dart';
+import 'package:water_tank_automation/services/firebase_service.dart';
 
 class WaterTankLevelPage extends StatefulWidget {
   const WaterTankLevelPage({super.key});
@@ -14,7 +19,6 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage> {
   bool isPlaying = true;
   int maxDuration = 10;
   bool isParticlesReady = true;
-  FirebaseDatabase database = FirebaseDatabase.instance;
   ValueNotifier<int> waterLevel = ValueNotifier(0);
   void waterLevelUpater(int val) {
     waterLevel.value = val;
@@ -22,22 +26,14 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage> {
 
   @override
   void initState() {
+    FirebaseAppService().readWaterLevel();
     super.initState();
-    database.ref('waterTank/water_level').onValue.listen((event) {
-      final double data = double.parse(event.snapshot.value.toString());
-      final levelOfWater = int.parse(((data / 50.0) * 100).toString());
-      waterLevelUpater(levelOfWater);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.sizeOf(context);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: mediaSize.height * 0.12,
@@ -45,6 +41,15 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage> {
           "Water Tank Level",
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.pushNamed(RouteNames.newWaterLevelRoute);
+
+                Logger().f('Calling 101');
+              },
+              icon: const Icon(Icons.forward))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -66,16 +71,24 @@ class _WaterTankLevelPageState extends State<WaterTankLevelPage> {
                       width: mediaSize.width * 0.7,
                       child: CustomPaint(
                         painter: WaterTankPainter(),
-                        child: ValueListenableBuilder<int>(
-                          valueListenable: waterLevel,
-                          builder: (context, waterLevelValue, _) {
-                            return CustomPaint(
-                              painter: LiquidPainter(
-                                ((waterLevelValue / 100) * maxDuration)
-                                    .toDouble(),
-                                maxDuration.toDouble(),
-                              ),
-                            );
+                        child: BlocBuilder<WaterTrackBloc, WaterTrackState>(
+                          builder: (context, state) {
+                            if (state.status == WaterTrackStatus.success) {
+                              return CustomPaint(
+                                painter: LiquidPainter(
+                                  ((state.waterLevel! / 100) * maxDuration)
+                                      .toDouble(),
+                                  maxDuration.toDouble(),
+                                ),
+                              );
+                            } else {
+                              return CustomPaint(
+                                painter: LiquidPainter(
+                                  ((50 / 100) * maxDuration).toDouble(),
+                                  maxDuration.toDouble(),
+                                ),
+                              );
+                            }
                           },
                         ),
                       ),
