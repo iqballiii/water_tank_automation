@@ -18,7 +18,6 @@ class NetworkRepository {
     Response response = await Dio().get(
         // "https://api.weatherapi.com/v1/current.json?key=cfa505caf5b94acc9b384823242109&q=Hyderabad,India&aqi=no");
         'https://api.weatherapi.com/v1/current.json?key=$apiKey&q=${currLatLng.$1},${currLatLng.$2}&aqi=no');
-    print(response.data);
     if (response.statusCode == 200) {
       return CurrentWeather.fromJson(response.data);
     } else if (response.statusCode == 400) {
