@@ -52,7 +52,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '377794084770',
     projectId: 'water-tank-automation-c1811',
     authDomain: 'water-tank-automation-c1811.firebaseapp.com',
-    databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'water-tank-automation-c1811.appspot.com',
     measurementId: 'G-D2L7X8R2FT',
   );
@@ -62,7 +63,8 @@ class DefaultFirebaseOptions {
     appId: '1:377794084770:android:e1487954acefb9fffcbcfb',
     messagingSenderId: '377794084770',
     projectId: 'water-tank-automation-c1811',
-    databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'water-tank-automation-c1811.appspot.com',
   );
 
@@ -71,7 +73,8 @@ class DefaultFirebaseOptions {
     appId: '1:377794084770:ios:ad2e3f282c25b950fcbcfb',
     messagingSenderId: '377794084770',
     projectId: 'water-tank-automation-c1811',
-    databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'water-tank-automation-c1811.appspot.com',
     iosBundleId: 'com.example.waterTankAutomation',
   );

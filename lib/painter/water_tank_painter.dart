@@ -26,13 +26,13 @@ class WaterTankPainter extends CustomPainter {
     return true;
   }
 }
-      //                -
-      // |           |  '
-      // |           |  '  
-      // |           |  '  
-      // |           |  ' --->  mediasize.height *1 + 10
-      // |           |  '  
-      // |           |  '
-      // |___________|  '
-      //| ----------- | -   
-   //  mediasize.width*0.8
+//                -
+// |           |  '
+// |           |  '
+// |           |  '
+// |           |  ' --->  mediasize.height *1 + 10
+// |           |  '
+// |           |  '
+// |___________|  '
+//| ----------- | -
+//  mediasize.width*0.8
