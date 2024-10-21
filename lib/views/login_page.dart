@@ -61,31 +61,33 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(
                         width: mediaSize.width * 0.35,
-                        child: ValueListenableBuilder<bool>(
-                          valueListenable: _obscureText,
-                          builder: (context, value, child) => TextFormField(
-                            textInputAction: TextInputAction.go,
-                            onFieldSubmitted: (value) {
-                              Logger().f("entered the go zone!");
-                              BlocProvider.of<AuthenticationBloc>(context).add(
-                                  SignInUserEvent(emailController.text,
-                                      passwordController.text));
-                            },
-                            controller: passwordController,
-                            obscureText: value,
-                            decoration: InputDecoration(
-                              labelText: "Password",
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  _obscureText.value = !_obscureText.value;
-                                },
-                                child: value
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off),
+                        child: Builder(builder: (context) {
+                          return ValueListenableBuilder<bool>(
+                            valueListenable: _obscureText,
+                            builder: (context, value, child) => TextFormField(
+                              textInputAction: TextInputAction.go,
+                              onFieldSubmitted: (value) {
+                                Logger().f("entered the go zone!");
+                                context.read<AuthenticationBloc>().add(
+                                    SignInUserEvent(emailController.text,
+                                        passwordController.text));
+                              },
+                              controller: passwordController,
+                              obscureText: value,
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    _obscureText.value = !_obscureText.value;
+                                  },
+                                  child: value
+                                      ? const Icon(Icons.visibility)
+                                      : const Icon(Icons.visibility_off),
+                                ),
                               ),
                             ),
-                          ),
-                        ))
+                          );
+                        }))
                     .animate()
                     .slideX(
                         duration: 600.ms,
