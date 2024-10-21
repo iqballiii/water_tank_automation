@@ -21,15 +21,9 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -61,5 +55,24 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'water-tank-automation-c1811.appspot.com',
     measurementId: 'G-D2L7X8R2FT',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAeA1Z93Wh-67V3FAo-y-bwoIcQL0dC-u4',
+    appId: '1:377794084770:android:e1487954acefb9fffcbcfb',
+    messagingSenderId: '377794084770',
+    projectId: 'water-tank-automation-c1811',
+    databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'water-tank-automation-c1811.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyD4UbKfJN4Huex_wM_mJ8bDSwtjtqnXbSo',
+    appId: '1:377794084770:ios:ad2e3f282c25b950fcbcfb',
+    messagingSenderId: '377794084770',
+    projectId: 'water-tank-automation-c1811',
+    databaseURL: 'https://water-tank-automation-c1811-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'water-tank-automation-c1811.appspot.com',
+    iosBundleId: 'com.example.waterTankAutomation',
   );
 }

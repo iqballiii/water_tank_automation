@@ -1,29 +1,7 @@
 {
   "name": "water_tank_automation",
   "version": "1.0.0",
-  "description": "A dashboard for personal home automation devices.",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iqballiii/water_tank_automation.git"
-  },
-  "keywords": [
-    "automation",
-    "firebase",
-    "flutter",
-    "IoT"
-  ],
-  "author": "meet.iqbal11@gmail.com",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iqballiii/water_tank_automation/issues"
-  },
-  "homepage": "https://github.com/iqballiii/water_tank_automation#readme"
+    "build": "flutter build web"
+  }
 }

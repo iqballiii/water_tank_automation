@@ -1,6 +1,6 @@
 {
-    "name": "The Tank Project",
-    "short_name": "WTA",
+    "name": "water_tank_automation",
+    "short_name": "water_tank_automation",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
